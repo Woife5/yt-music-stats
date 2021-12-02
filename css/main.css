@@ -1,12 +1,10 @@
-/* Lol wtf even is this? */
-
 .container {
     width: 90%;
     height: 100%;
     margin: 0 auto;
 }
 
-.col {
+.row {
     display: flex;
     flex-direction: row;
 }
