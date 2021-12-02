@@ -32,10 +32,73 @@ function updateGraph(data) {
         case 'top_artists':
             displayTopArtists(data);
             break;
+        case 'top_songs':
+            displayTopSongs(data);
+            break;
         default:
             displaySongsPerMonth(data);
             break;
     }
+}
+
+/**
+ * Displays the top 25 songs by plays within the last year.
+ * @param {watch-history.json} data YouTube watch history data
+ */
+function displayTopSongs(data) {
+    let relevantData = getOnlyYTMusicData(data);
+
+    let organizedData = [];
+    relevantData.forEach(entry => {
+        let entryData = getRelevantData(entry);
+
+        if (entryData) {
+            for (let i = 0; i < organizedData.length; i++) {
+                if (organizedData[i].name === entryData.title) {
+                    organizedData[i].plays++;
+                    return;
+                }
+            }
+
+            organizedData.push({
+                name: entryData.title,
+                plays: 1,
+            });
+        }
+    });
+
+    organizedData.sort((a, b) => b.plays - a.plays);
+
+    // Only get the Top 25 artists
+    organizedData = organizedData.slice(0, 25);
+
+    if (chart) {
+        chart.destroy();
+        chart = null;
+    }
+
+    chart = new Chart(chartCtx, {
+        type: 'bar',
+        data: {
+            labels: organizedData.map(element => element.name),
+            datasets: [
+                {
+                    label: 'Plays per artist',
+                    data: organizedData.map(element => element.plays),
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
 }
 
 /**
