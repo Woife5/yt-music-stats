@@ -1,11 +1,20 @@
 const fileSelector = document.getElementById('file-selector');
+const chartSelector = document.getElementById('chart-selector');
 const chartCtx = document.getElementById('chart').getContext('2d');
 
 // Setup the file reader
 const reader = new FileReader();
 reader.onload = () => {
     data = JSON.parse(reader.result);
-    displaySongsPerMonth(data);
+
+    switch (chartSelector.value) {
+        case 'songs_per_month':
+            displaySongsPerMonth(data);
+            break;
+        default:
+            displaySongsPerMonth(data);
+            break;
+    }
 };
 
 // Initialize the data variable with null.
