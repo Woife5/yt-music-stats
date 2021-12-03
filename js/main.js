@@ -89,33 +89,10 @@ function displayTopSongs(data) {
     // Only get the Top 25 artists
     organizedData = organizedData.slice(0, 25);
 
-    if (chart) {
-        chart.destroy();
-        chart = null;
-    }
-
-    chart = new Chart(chartCtx, {
-        type: 'bar',
-        data: {
-            labels: organizedData.map(element => element.name),
-            datasets: [
-                {
-                    label: 'Plays per artist',
-                    data: organizedData.map(element => element.plays),
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1,
-                },
-            ],
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                },
-            },
-        },
-    });
+    createChart(
+        organizedData.map(element => element.name),
+        organizedData.map(element => element.plays)
+    );
 }
 
 /**
@@ -139,35 +116,12 @@ function displaySongsPerMonth(data) {
         }
     });
 
-    if (chart) {
-        chart.destroy();
-        chart = null;
-    }
-
-    chart = new Chart(chartCtx, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(organizedData).reverse(),
-            datasets: [
-                {
-                    label: 'Songs played per month',
-                    data: Object.values(organizedData)
-                        .map(element => element.length)
-                        .reverse(),
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1,
-                },
-            ],
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                },
-            },
-        },
-    });
+    createChart(
+        Object.keys(organizedData).reverse(),
+        Object.values(organizedData)
+            .map(element => element.length)
+            .reverse()
+    );
 }
 
 /**
@@ -204,6 +158,13 @@ function displayTopArtists(data) {
     // Only get the Top 25 artists
     organizedData = organizedData.slice(0, 25);
 
+    createChart(
+        organizedData.map(element => element.name),
+        organizedData.map(element => element.plays)
+    );
+}
+
+function createChart(labels, data) {
     if (chart) {
         chart.destroy();
         chart = null;
@@ -212,11 +173,11 @@ function displayTopArtists(data) {
     chart = new Chart(chartCtx, {
         type: 'bar',
         data: {
-            labels: organizedData.map(element => element.name),
+            labels: labels,
             datasets: [
                 {
                     label: 'Plays per artist',
-                    data: organizedData.map(element => element.plays),
+                    data: data,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1,
