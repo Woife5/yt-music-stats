@@ -10,6 +10,10 @@ Currently this dashboard only supports displaying the amount of songs played per
 
 Download your data (see [Obtaining your data](#obtaining-your-data)) and then open the [Website](https://woife5.github.io/yt-music-stats/). Click "Choose a file" and select the `watch-history.json` file located in `<path-to>/Takeout/YouTube and YouTube Music/history/watch-history.json`
 
+## Export to CSV
+
+You can export your entire YouTube Music history to a CSV file. This file can be imported to Excel or other spreadsheet software. Within this software you can create more detailed statistics. If you want to have really detailed statistics, you can import your data to [Google Sheets](https://docs.google.com/spreadsheets/u/0/) and then use [Google Datastudio](https://datastudio.google.com/) to create a report.
+
 ## Obtaining your data
 
 To get your data, first visit [Google Takeout](https://takeout.google.com). Click the "Deselect all" button at the top and then scroll to the very bottom and only select YouTube data.

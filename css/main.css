@@ -45,3 +45,9 @@
 .custom-select-input {
     height: calc(1.5em + 16px);
 }
+
+.custom-button {
+    height: calc(1.5em + 16px);
+    max-width: fit-content;
+    min-width: fit-content;
+}

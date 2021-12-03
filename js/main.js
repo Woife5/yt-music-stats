@@ -1,5 +1,6 @@
 const fileSelector = document.getElementById('file-selector');
 const chartSelector = document.getElementById('chart-selector');
+const exportButton = document.getElementById('export-button');
 const chartCtx = document.getElementById('chart').getContext('2d');
 
 // Setup the file reader
@@ -22,6 +23,22 @@ fileSelector.addEventListener('change', event => {
 
 chartSelector.addEventListener('change', event => {
     updateGraph(data);
+});
+
+exportButton.addEventListener('click', () => {
+    let relevantData = getOnlyYTMusicData(data);
+
+    let csvData = 'Title;Artist;Time\n';
+    relevantData.forEach(entry => {
+        let entryData = getRelevantData(entry);
+        if (!entryData) return;
+        csvData += `${entryData.title};${entryData.artist};${entryData.time}\n`;
+    });
+
+    let link = document.createElement('a');
+    link.download = 'ytmusic-watch-history.csv';
+    link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+    link.click();
 });
 
 function updateGraph(data) {
